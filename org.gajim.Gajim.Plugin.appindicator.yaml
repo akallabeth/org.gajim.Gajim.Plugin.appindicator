@@ -11,6 +11,9 @@ build-options:
   env:
     PYTHONPATH: /app/plugins/appindicator/lib/python3.7/site-packages/
 
+cleanup:
+  - /app/share/man
+
 modules:
   - modules/python3-pillow.yaml
 
@@ -23,6 +26,35 @@ modules:
       - type: file
         path: org.gajim.Gajim.Plugin.appindicator.metainfo.xml
 
+  - name: intltool
+    buildsystem: autotools
+    config-opts: 
+      - --prefix=/usr
+    sources:
+      - type: archive
+        url: https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
+        sha256: 67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd
+
+  - name: libdbusmenu
+    buildsystem: autotools
+    config-opts: 
+      - --with-gtk=3
+        --prefix=/usr
+    sources:
+      - type: archive
+        url: https://launchpad.net/libdbusmenu/16.04/16.04.0/+download/libdbusmenu-16.04.0.tar.gz
+        sha256: b9cc4a2acd74509435892823607d966d424bd9ad5d0b00938f27240a1bfa878a
+
+  - name: libappindicator3
+    buildsystem: autotools
+    config-opts: 
+      - --with-gtk=3
+        --prefix=/usr
+    sources:
+      - type: archive
+        url: https://launchpad.net/libappindicator/12.10/12.10.0/+download/libappindicator-12.10.0.tar.gz
+        sha256: d5907c1f98084acf28fd19593cb70672caa0ca1cf82d747ba6f4830d4cc3b49f
+
   - name: gajim-appindicator
     buildsystem: simple
     build-commands:
@@ -31,5 +63,5 @@ modules:
       - appstream-compose --basename=org.gajim.Gajim.Plugin.appindicator --prefix=${FLATPAK_DEST} --origin=flatpak org.gajim.Gajim.Plugin.appindicator
     sources:
       - type: archive
-        url: https://ftp.gajim.org/plugins_releases/appindicator_integration_1.3.2.zip
-        sha256: d56e1af24cc462d2090b33c53c6dd9f2a00d38c6c35aaa616d021c5f069a2333
+        url: https://ftp.gajim.org/plugins_releases/appindicator_integration_1.3.1.zip
+        sha256: 6b4c67ab6d48a983788f1c6f445f98a3b2da0d5c50da8eab7dad66c490f00721
